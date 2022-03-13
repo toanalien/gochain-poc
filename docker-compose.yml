@@ -1,0 +1,12 @@
+version: "3"
+services:
+  node:
+    container_name: node
+    image: gcr.io/gochain-core/gochain:${GOCHAIN_TAG:-stable}
+    ports:
+      - "30303:30303"
+      - "30303:30303/udp"
+    volumes:
+      - .:/gochain
+    command: gochain --networkid ${GOCHAIN_NETWORK} --config /gochain/config.toml --nodiscover --datadir /gochain/node --cache ${GOCHAIN_CACHE:-1024} --mine --unlock ${GOCHAIN_ACCT} --password /gochain/password.txt
+    restart: always
